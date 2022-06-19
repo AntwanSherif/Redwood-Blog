@@ -7,6 +7,7 @@ import {
   TextAreaField,
   Submit,
   useForm,
+  FormError,
 } from '@redwoodjs/forms'
 import { Toaster, toast } from '@redwoodjs/web/toast'
 
@@ -20,7 +21,7 @@ const CREATE_CONTACT = gql`
 
 const ContactPage = () => {
   const formMethods = useForm()
-  const [create, { loading }] = useMutation(CREATE_CONTACT, {
+  const [create, { loading, error }] = useMutation(CREATE_CONTACT, {
     onCompleted: () => {
       toast.success('Thank you for your message')
       formMethods.reset()
@@ -37,7 +38,9 @@ const ContactPage = () => {
 
       <Toaster />
 
-      <Form onSubmit={onSubmit} formMethods={formMethods}>
+      <Form onSubmit={onSubmit} formMethods={formMethods} error={error}>
+        <FormError error={error} wrapperClassName="form-error" />
+
         <Label name="name" errorClassName="error">
           Name
         </Label>
@@ -56,7 +59,7 @@ const ContactPage = () => {
           validation={{
             required: true,
             pattern: {
-              value: /^[^@]+@[^.]+\..+$/,
+              // value: /^[^@]+@[^.]+\..+$/,
             },
           }}
           errorClassName="error"
