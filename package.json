@@ -11,7 +11,7 @@
     "dev": "yarn rw dev"
   },
   "devDependencies": {
-    "@redwoodjs/core": "0.50.0"
+    "@redwoodjs/core": "^2.0.0"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
