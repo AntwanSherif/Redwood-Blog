@@ -59,7 +59,8 @@ const ContactPage = () => {
           validation={{
             required: true,
             pattern: {
-              // value: /^[^@]+@[^.]+\..+$/,
+              value: /^[^@]+@[^.]+\..+$/,
+              message: 'Invalid email address',
             },
           }}
           errorClassName="error"
