@@ -1,4 +1,6 @@
-import { render, screen, within } from '@redwoodjs/testing/web'
+import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
+
+import { standard } from 'src/components/CommentsCell/CommentsCell.mock'
 
 import Article from './Article'
 
@@ -10,14 +12,25 @@ const ARTICLE = {
 }
 
 describe('Article', () => {
-  it('renders a blog post with full body', () => {
-    render(<Article article={ARTICLE} />)
+  describe('displaying the full blog post', () => {
+    it('renders a blog post with full body', () => {
+      render(<Article article={ARTICLE} />)
 
-    expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
-    expect(screen.getByText(ARTICLE.body)).toBeInTheDocument()
+      expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
+      expect(screen.getByText(ARTICLE.body)).toBeInTheDocument()
+    })
+
+    it('renders comments when displaying a full blog post', async () => {
+      const comment = standard().comments[0]
+      render(<Article article={ARTICLE} />)
+
+      await waitFor(() =>
+        expect(screen.getByText(comment.body)).toBeInTheDocument()
+      )
+    })
   })
 
-  describe('post body truncate functionality', () => {
+  describe('displaying blog post summary', () => {
     it('renders a summary of a blog post', () => {
       render(<Article article={ARTICLE} summary />)
 
@@ -29,9 +42,17 @@ describe('Article', () => {
       ).toBeInTheDocument()
     })
 
+    it('does not render comments when displaying a summary', async () => {
+      const comment = standard().comments[0]
+      render(<Article article={ARTICLE} summary />)
+
+      await waitFor(() =>
+        expect(screen.queryByText(comment.body)).not.toBeInTheDocument()
+      )
+    })
+
     it('renders full body if shorter than truncation length', () => {
       const SHORT_BODY = 'short'
-
       render(<Article article={{ ...ARTICLE, body: SHORT_BODY }} summary />)
 
       const matchedBody = screen.getByText(SHORT_BODY, { exact: true })
