@@ -8,7 +8,9 @@
     ]
   },
   "scripts": {
-    "dev": "yarn rw dev"
+    "dev": "yarn rw dev",
+    "test": "yarn rw test",
+    "storybook": "yarn rw storybook"
   },
   "devDependencies": {
     "@redwoodjs/core": "^2.0.0"
