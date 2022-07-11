@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing/web'
+import { render, screen, within } from '@redwoodjs/testing/web'
 
 import Article from './Article'
 
@@ -10,21 +10,36 @@ const ARTICLE = {
 }
 
 describe('Article', () => {
-  it('renders a blog post', () => {
+  it('renders a blog post with full body', () => {
     render(<Article article={ARTICLE} />)
 
     expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
     expect(screen.getByText(ARTICLE.body)).toBeInTheDocument()
   })
 
-  it('renders a summary of a blog post', () => {
-    render(<Article article={ARTICLE} summary />)
+  describe('post body truncate functionality', () => {
+    it('renders a summary of a blog post', () => {
+      render(<Article article={ARTICLE} summary />)
 
-    expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        'Neutra tacos hot chicken prism raw denim, put a bird on it enamel pin post-ironic vape cred DIY. Str...'
-      )
-    ).toBeInTheDocument()
+      expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          'Neutra tacos hot chicken prism raw denim, put a bird on it enamel pin post-ironic vape cred DIY. Str...'
+        )
+      ).toBeInTheDocument()
+    })
+
+    it('renders full body if shorter than truncation length', () => {
+      const SHORT_BODY = 'short'
+
+      render(<Article article={{ ...ARTICLE, body: SHORT_BODY }} summary />)
+
+      const matchedBody = screen.getByText(SHORT_BODY, { exact: true })
+      const ellipsis = within(matchedBody).queryByText('...', { exact: false })
+
+      expect(screen.getByText(ARTICLE.title)).toBeInTheDocument()
+      expect(matchedBody).toBeInTheDocument()
+      expect(ellipsis).not.toBeInTheDocument()
+    })
   })
 })
