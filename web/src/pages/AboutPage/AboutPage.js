@@ -5,7 +5,7 @@ const AboutPage = () => {
     <>
       <MetaTags title="About" description="About page" />
 
-      <p>
+      <p className="font-light">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque suscipit
         veritatis deserunt quos natus tempora ipsa aliquam? Exercitationem esse
         ea consectetur. Fugiat ducimus aperiam, nam nesciunt beatae repudiandae.

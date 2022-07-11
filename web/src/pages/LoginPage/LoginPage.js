@@ -1,5 +1,7 @@
-import { Link, navigate, routes } from '@redwoodjs/router'
 import { useRef } from 'react'
+import { useEffect } from 'react'
+
+import { useAuth } from '@redwoodjs/auth'
 import {
   Form,
   Label,
@@ -8,10 +10,9 @@ import {
   Submit,
   FieldError,
 } from '@redwoodjs/forms'
-import { useAuth } from '@redwoodjs/auth'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
-import { useEffect } from 'react'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -43,7 +44,7 @@ const LoginPage = () => {
     <>
       <MetaTags title="Login" />
 
-      <main className="rw-main">
+      <main className="rw-main w-96 mx-auto mt-12">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
@@ -114,7 +115,7 @@ const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="rw-login-link">
+          <div className="rw-login-link mt-2 text-center">
             <span>Don&apos;t have an account?</span>{' '}
             <Link to={routes.signup()} className="rw-link">
               Sign up!
