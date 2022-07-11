@@ -1,6 +1,11 @@
 export const standard = defineScenario({
   contact: {
-    one: { data: { name: 'String', email: 'String', message: 'String' } },
-    two: { data: { name: 'String', email: 'String', message: 'String' } },
+    john: {
+      data: {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        message: 'I love RedwoodJS',
+      },
+    },
   },
 })

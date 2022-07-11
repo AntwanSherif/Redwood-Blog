@@ -29,6 +29,8 @@ describe('BlogLayout', () => {
     loggedIn()
     render(<BlogLayout />)
 
-    await waitFor(() => expect(screen.getByText(EMAIL)).toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.getByText(EMAIL, { exact: false })).toBeInTheDocument()
+    )
   })
 })
